@@ -17,7 +17,7 @@ read -p "Tapez le numéro du manga [$nrm] : " nrm
 read -p "Tapez le numéro du tome [$tome] : " tome
 manga=$(cat list.txt |sed -n $nrm'p')
 read -p "Tapez le numéro du chapitre [$chapter] : " chapter
-read -p "Tapez le numéro du page : " page
+page=$(wget -q -O - http://funquizzes.fun//uploads/manga/"$manga"/$chapter/ |awk '{print $3}' |grep -E .jpg |sed '$!d' |tr '>' ' ' |awk '{print $2}' |tr -d [:alpha:] |tr -d [:punct:])
 echo "$nrm" > ~/.jsvf.last
 echo "$tome" >> ~/.jsvf.last
 echo "$chapter" >> ~/.jsvf.last
@@ -30,7 +30,6 @@ do
         then
                 echo -e  "•\033[32m Page \e[31m$i\e[0m enregistrée ! \033[0m"
         else
-                echo -e  "•\033[32m \e[31m$i.jpg\e[0m ne semble pas disponible, il se pourrait que le fichier soit \e[31m${i:1}.jpg \033[0m"
                 wget -q http://funquizzes.fun//uploads/manga/"$manga"/$chapter/${i:1}.jpg -P "$manga"/"Tome $tome"/"Chapitre $chapter"/
                 if [ -e "$manga"/"Tome $tome"/"Chapitre $chapter"/"${i:1}.jpg" ]
                 then
