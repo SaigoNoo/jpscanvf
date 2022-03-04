@@ -10,14 +10,12 @@ Vous pouvez importer (ou plutôt déplacer) le fichier jsvf dans /usr/local/bin/
 N'oubliez pas de faire un ``sudo chmod a+x /usr/local/bin/jsvf`` afin de donner la permission d'exécuter le script ! 
 
 # Ca ne fonctionne pas ! Pourquoi ?
-Dans ce cas je vous invite a modifier ceci dans le code:
+Dans ce cas je vous invite a modifier une seule chose dans le script:
 ```
-debug=$(echo "false")
+sudo nano /usr/local/bin/jsvf
 ```
-par ceci:
-```
-debug=$(echo "true")
-```
+Et d'y ajouter ``-q`` devant les wget (lignes 28 et 34)
+
 Vous verrez à l'écran lors de la prochaine tentatives les retours du téléchargement !
 
 # Définir un chemin de sortie (dossier d'enregistrement)
