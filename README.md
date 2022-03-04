@@ -5,6 +5,8 @@ Utilitaire écrit en bash afin d'enregistrer les scans d'un manga sur le site jp
 Ce script étant écrit en bash (Linux), il ne sera pas possible de l'utiliser sous MacOS ou Windows, a moins de passer par un émulateur ou les applications Ubuntu (ou dérivés basés sur Debian), disponible via le Microsoft Store !
 Pour le moment, seul les fichiers étant sur la plateforme http://funquizzes.fun/ (plateforme d'hébérgement) sont compatibles avec ce script (temporairement, le temps de voir si d'autres mangas sont sur d'autres hébérgeurs que http://funquizzes.fun//uploads/manga/)
 
+!!!! IMPORTANT !!!! POUR LE NOM DU MANGA (DOSSIER), ASSUREZ-VOUS D'AVOIR LE MEME NOM SANS FAUTES QUE VOUS POUVEZ TROUVER SUR http://funquizzes.fun/ !!!!
+
 # Utilisation sans taper ./jsvf ou bash jsvf
 Vous pouvez importer (ou plutôt déplacer) le fichier jsvf dans /usr/local/bin/) ! Cela vous permettra de faire appel au script ou que vous soyez situé dans votre console !
 N'oubliez pas de faire un ``sudo chmod a+x /usr/local/bin/jsvf`` afin de donner la permission d'exécuter le script ! 
