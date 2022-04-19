@@ -1,0 +1,113 @@
+#!/bin/bash
+if [ "$USER" = "plex" ]
+then
+	function logo {
+		echo "	     ██╗██████╗ ███████╗ ██████╗ █████╗ ███╗   ██╗██╗   ██╗███████╗"
+		echo "	     ██║██╔══██╗██╔════╝██╔════╝██╔══██╗████╗  ██║██║   ██║██╔════╝"
+		echo "	     ██║██████╔╝███████╗██║     ███████║██╔██╗ ██║██║   ██║█████╗  "
+		echo "	██   ██║██╔═══╝ ╚════██║██║     ██╔══██║██║╚██╗██║╚██╗ ██╔╝██╔══╝  "
+		echo "	╚█████╔╝██║     ███████║╚██████╗██║  ██║██║ ╚████║ ╚████╔╝ ██║     "
+		echo "	 ╚════╝ ╚═╝     ╚══════╝ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═══╝  ╚═══╝  ╚═╝     "
+		echo "		A non official App - Just made by someone for fun				"
+		echo -e "\n\n\n"
+	}
+	printf "\033c"
+
+	# Variable Customizable
+	output="/usb/usb1/Mangas"
+
+	# Count Number of Mangas Available
+	nbFiles=$(ls $output |wc -l)
+
+	# Show Logo
+
+	# Show Names of Mangas
+	function main {
+		printf "\033c"
+		logo
+		echo -e "	\e[33mListe des mangas:\e[0m\n"
+		for i in $(eval echo {1..$nbFiles})
+		do
+			echo "	$i. $(ls $output |tr "" "" |sed -n $i'p')"
+		done
+		echo -e "\n	*-----------------------------------*"
+	}
+
+	main
+	# Edit Mode Choice
+	echo -e "	1. \e[33mChoisir un manga\e[0m\n	2. \e[32mAjouter un nouveau manga\e[0m\n	3. \e[31mSupprimer un manga\e[0m\n	4. Quitter"
+	read -p "	Que voulez-vous faire: " edit
+
+	# Choose Mode
+	if [ $edit = 1 ]
+	then
+		main
+
+		read -p "	Quel manga: " manga
+		mangaName=$(ls $output |tr "" "" |sed -n $manga'p')
+
+		read -p "	Quel tome sachant que le dernier que vous avez est le tome $(ls "$output/$mangaName" |wc -l): " tome
+		if [  ${#tome} = 1 ]
+                then
+                	tome=$(echo 0$tome)
+                fi
+		if [ ! -x "$output/$mangaName/Tome $tome" ]
+                then
+                        mkdir "$output/$mangaName/Tome $tome"
+                fi
+
+		read -p "	Quel chapitre sachant que le dernier que vous avez est le chapitre $(ls "$output/$mangaName/Tome $tome" |wc -l): " chapitre
+		if [ ! -x "$output/$mangaName/Tome $tome/Chapitre $chapitre" ]
+                then
+                        mkdir "$output/$mangaName/Tome $tome/Chapitre $chapitre"
+                fi
+
+		nbPages=$(wget -q -O - "https://funquizzes.fun/uploads/manga/$mangaName/$chapitre/" |grep jpg |sed '$!d' |tr ';' ' ' |awk '{print $4}' |tr '>' ' ' | awk '{print $2}' |tr -d [:alpha:] |tr '.' ' ' |awk '{print $1}')
+
+		main
+
+		for i in $(eval echo {01..$nbPages})
+		do
+			echo -e "	Téléchargement de la page $i... \c"
+			if [ -f "$output/$mangaName/Tome $tome/Chapitre $chapitre/$i.jpg" ]
+			then
+				echo -e "\e[32mexistant\e[0m"
+                        else
+				wget -q "https://funquizzes.fun/uploads/manga/$mangaName/$chapitre/$i.jpg" -O "$output/$mangaName/Tome $tome/Chapitre $chapitre/$i.jpg"
+				if [ -f "$output/$mangaName/Tome $tome/Chapitre $chapitre/$i.jpg" ]
+				then
+					echo -e "\e[32mterminé\e[0m"
+				else
+					echo -e "\e[31merreur\e[0m"
+				fi
+			fi
+		done
+
+	elif [ $edit = 2 ]
+	then
+		main
+
+                read -p "	Quel est le nom du manga: " manga
+		mkdir "$output/$manga"
+		japanread
+	elif [ $edit = 3 ]
+	then
+		main
+
+                read -p "	Quel manga: " manga
+		mangaName=$(ls $output |tr "" "" |sed -n $manga'p')
+		echo -e "	\e[31mSi vous êtes sûr de vouloir supprimer $mangaName, retapez DELETE en MAJUSCULE:\e[33m \c"
+		read confirm
+		if [ $confirm = "DELETE" ]
+		then
+			rm -r "$output/$mangaName"
+		fi
+		japanread
+	elif [ $edit = 4 ]
+	then
+		exit
+	fi
+else
+	printf "\033c"
+	echo "Vous devez être connecté en tant que www-data user !"
+fi
