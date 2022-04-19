@@ -9,12 +9,12 @@ Pour le moment, seul les fichiers étant sur la plateforme http://funquizzes.fun
 
 # Execution depuis un dossier programme
 Vous pouvez importer (ou plutôt déplacer) le fichier jpscanvf dans /usr/local/bin/) ! Cela vous permettra de faire appel au script ou que vous soyez situé dans votre console !
-N'oubliez pas de faire un ``sudo chmod a+x /usr/local/bin/jsvf`` afin de donner la permission d'exécuter le script ! 
+N'oubliez pas de faire un ``sudo chmod a+x /usr/local/bin/jpscanvf`` afin de donner la permission d'exécuter le script ! 
 
 # Ca ne fonctionne pas ! Pourquoi ?
 Dans ce cas je vous invite a modifier une seule chose dans le script:
 ```
-sudo nano /usr/local/bin/jsvf
+sudo nano /usr/local/bin/jpscanvf
 ```
 Et d'y ajouter ``-q`` devant les wget (lignes 28 et 34)
 
