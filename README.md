@@ -1,5 +1,6 @@
 # jpscanvf
 Utilitaire écrit en bash afin d'enregistrer les scans d'un manga sur le site jpscan-vf.com !
+*Une version mise à jour de jpscanvf sera postée, permettant de récuperer un manga directement depuis le script, sans avoir a créer manuellement le dossier !*
 
 # Captures d'écran
 ![image](https://user-images.githubusercontent.com/40198990/164304609-6cfa6d71-1117-4f7e-9fbd-189aac62a35d.png)
